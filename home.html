@@ -1,0 +1,2138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>申请表单</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="drawer.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        
+        :root {
+            --primary-color: #1890ff;
+            --border-color: #e8e8e8;
+            --text-primary: #262626;
+            --text-secondary: #595959;
+            --bg-light: #f5f7fa;
+            --shadow-light: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-primary);
+            line-height: 1.5;
+            font-size: 14px;
+        }
+        
+        .header {
+            background-color: #fff;
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-light);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-left {
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-item {
+            margin-right: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .header-right {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+        
+        .steps-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            margin: 10px auto;
+            display: flex;
+            justify-content: space-between;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            max-width: 1200px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .step-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            flex: 1;
+            padding: 0 10px;
+        }
+        
+        .step-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #fff;
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        
+        .step-active .step-number {
+            background-color: #1890ff;
+            color: #fff;
+            border-color: #1890ff;
+        }
+        
+        .step-text {
+            font-size: 12px;
+            color: #999;
+            text-align: center;
+        }
+        
+        .step-active .step-text {
+            color: #1890ff;
+            font-weight: 500;
+        }
+        
+        .step-item::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: -50%;
+            width: 100%;
+            height: 1px;
+            background-color: #e0e0e0;
+            z-index: 1;
+        }
+        
+        .step-item:first-child::before {
+            display: none;
+        }
+        
+        .main-container {
+            max-width: 1200px;
+            margin: 12px auto;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: var(--shadow-light);
+            padding: 24px;
+        }
+        
+        .tab-header {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 24px;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 12px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .tab-header > div:first-child {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .tab-item {
+            padding: 12px 24px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            position: relative;
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+        }
+        
+        .tab-active {
+            color: #1890ff;
+            font-weight: 500;
+        }
+        
+        .tab-active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #1890ff;
+        }
+        
+        .tab-actions {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        
+        .action-btn {
+            display: flex;
+            align-items: center;
+            padding: 6px 12px;
+            font-size: 13px;
+            color: #666;
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            margin-left: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .action-btn.icon-only {
+            padding: 6px;
+        }
+
+        .action-btn.icon-only .action-btn-icon {
+            margin-right: 0;
+        }
+
+        .action-btn.highlight {
+            background-color: #1890ff;
+            color: #fff;
+            border-color: #1890ff;
+        }
+
+        .action-btn.highlight:hover {
+            background-color: #40a9ff;
+            border-color: #40a9ff;
+            color: #fff;
+        }
+        
+        .action-btn:hover {
+            color: #1890ff;
+            border-color: #1890ff;
+        }
+        
+        .action-btn-icon {
+            margin-right: 4px;
+        }
+        
+        .form-container {
+            padding: 10px 0;
+        }
+
+        .form-row:has(.form-label:contains("专业名称")) .input-text {
+            font-weight: 500;
+            font-size: 15px;
+            color: #262626;
+        }
+        
+        .form-row:has(.form-label:contains("学费")) .input-text {
+            color: #f5222d;
+            font-weight: 500;
+        }
+        
+        .form-row:has(.form-label:contains("开学时间")) .input-text {
+            color: #1890ff;
+            font-weight: 500;
+        }
+        
+        .form-notice {
+            background-color: #f0f7ff;
+            padding: 5px 15px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-size: 13px;
+            color: #666;
+            display: flex;
+            align-items: center;
+        }
+        
+        .notice-icon {
+            margin-right: 10px;
+            color: #1890ff;
+        }
+        
+        .school-item {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 5px;
+            margin-bottom: 15px;
+            /* width: 95%; */
+            position: relative;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        
+        .school-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 5px 15px;
+            background-color: #f5f7fa;
+            border-radius: 4px;
+            margin-bottom: 5px;
+            flex-wrap: wrap;
+        }
+        
+        .school-number {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #f5f7fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        
+        .school-name {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            font-weight: 500;
+            flex-wrap: wrap;
+            max-width: calc(100% - 120px);
+            line-height: 1.5;
+        }
+        
+        .school-tag {
+            display: inline-block;
+            padding: 3px 8px;
+            margin-left: 10px;
+            font-size: 12px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        .school-tag.tag-success {
+            background-color: #f6ffed;
+            color: #52c41a;
+            border: 1px solid #b7eb8f;
+        }
+        
+        .school-tag.tag-warning {
+            background-color: #fffbe6;
+            color: #faad14;
+            border: 1px solid #ffe58f;
+        }
+        
+        .school-tag.tag-info {
+            background-color: #e6f7ff;
+            color: #1890ff;
+            border: 1px solid #91d5ff;
+        }
+        
+        .school-tag.tag-danger {
+            background-color: #fff1f0;
+            color: #f5222d;
+            border: 1px solid #ffa39e;
+        }
+        
+        .school-actions {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+        }
+
+        .edit-icon {
+            color: #1890ff;
+            cursor: pointer;
+            font-size: 14px;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.8);
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .edit-icon:hover {
+            color: #40a9ff;
+            background-color: rgba(230, 247, 255, 0.9);
+        }
+        
+        .action-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        
+        .form-row {
+            display: flex;
+            margin-bottom: 18px;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 0 15px;
+            flex-wrap: nowrap;
+        }
+
+        .form-label {
+            min-width: 80px;
+            max-width: 100px;
+            font-size: 14px;
+            color: #595959;
+            display: flex;
+            align-items: flex-start;
+            padding-top: 8px;
+            flex-shrink: 0;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+        
+        .required::before {
+            content: '*';
+            color: #f5222d;
+            margin-right: 4px;
+            font-weight: bold;
+        }
+        
+        .form-input {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            min-width: 0;
+            max-width: 100%;
+            position: relative;
+        }
+
+        .form-row:has(.form-label:contains("学制")) {
+            flex: 0 0 auto;
+            min-width: 200px;
+            max-width: 250px;
+        }
+
+        .form-row:has(.form-label:contains("专业名称")) {
+            flex: 1;
+            min-width: 400px;
+            max-width: 800px;
+        }
+        
+        .input-text, .input-textarea {
+            border: none;
+            background: transparent;
+            width: 100%;
+            padding: 8px 0;
+            color: #262626;
+            font-size: 14px;
+            line-height: 1.5;
+            word-break: break-all;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+        }
+        
+        .input-text.editable, .input-textarea.editable {
+            border-bottom: 1px solid #1890ff;
+            background-color: rgba(24, 144, 255, 0.05);
+            padding: 8px 10px;
+            border-radius: 4px;
+        }
+        
+        .input-text:focus, .input-textarea:focus {
+            outline: none;
+        }
+        
+        .input-text.editable {
+            background-color: #fff;
+            border-bottom: 1px solid #40a9ff;
+            pointer-events: auto;
+            cursor: text;
+            box-shadow: 0 1px 4px rgba(24, 144, 255, 0.1);
+        }
+        
+        .input-select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #262626;
+            background-color: #fafafa;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999' d='M6 8.825L.763 4.5 2.5 3.763 6 7.175 9.5 3.763l.737.737z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 30px;
+            pointer-events: none;
+            font-weight: 500;
+        }
+        
+        /* 表单通知样式 */
+        .form-notice {
+            display: flex;
+            align-items: center;
+            padding: 5px 16px;
+            background-color: #e6f7ff;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            border-left: 4px solid #1890ff;
+        }
+        
+        .notice-icon {
+            color: #1890ff;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        
+        /* 按钮样式优化 */
+        .action-btn {
+            display: flex;
+            align-items: center;
+            padding: 8px 14px;
+            font-size: 14px;
+            color: #595959;
+            background-color: #fff;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            margin-left: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+        }
+        
+        .action-btn:hover {
+            color: #1890ff;
+            border-color: #1890ff;
+            background-color: #f0f7ff;
+        }
+        
+        .action-btn.icon-only {
+            padding: 8px;
+        }
+        
+        .action-btn-icon {
+            margin-right: 6px;
+        }
+        
+        .action-btn.highlight {
+            background-color: #1890ff;
+            color: white;
+            border-color: #1890ff;
+        }
+        
+        .action-btn.highlight:hover {
+            background-color: #40a9ff;
+            border-color: #40a9ff;
+        }
+        
+        .btn-default:hover {
+            color: #1890ff;
+            border-color: #1890ff;
+        }
+        
+        .btn-primary {
+            background-color: #1890ff;
+            color: #fff;
+            border-color: #1890ff;
+        }
+        
+        .btn-primary:hover {
+            background-color: #40a9ff;
+            border-color: #40a9ff;
+        }
+        
+        .btn-icon {
+            margin-right: 6px;
+        }
+        
+        /* 国家分组样式 */
+        .country-group {
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+        }
+        
+        .country-header {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #262626;
+            background: linear-gradient(135deg, #a8ddf5 0%, #7ecef4 100%);
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 0;
+            border-left: 4px solid #1890ff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            justify-content: space-between;
+        }
+
+        .country-title-wrapper {
+            display: flex;
+            align-items: center;
+        }
+        
+        .country-flag {
+            width: 28px;
+            height: 28px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            margin-right: 12px;
+            border-radius: 50%;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+            border: 2px solid #fff;
+            display: inline-block;
+        }
+        
+        .country-toggle-btn {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #595959;
+            border: 1px solid #e8e8e8;
+        }
+        
+        .country-toggle-btn:hover {
+            background-color: #fff;
+            color: #1890ff;
+            transform: scale(1.05);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .country-toggle-btn i {
+            transition: transform 0.3s ease;
+        }
+        
+        .country-content {
+            transition: all 0.3s ease-in-out;
+            max-height: 2000px;
+            opacity: 1;
+            overflow: hidden;
+            background-color: #f5f7fa;
+            padding: 15px;
+            padding-bottom: 5px;
+            border-radius: 0 0 8px 8px;
+        }
+        
+        .country-content.collapsed {
+            max-height: 0;
+            opacity: 0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .country-header span::after {
+            content: attr(data-count);
+            color: #040404;
+            font-weight: normal;
+            font-size: 14px;
+        }
+        
+        .country-header span[data-count]::after {
+            content: attr(data-count);
+            margin-left: 6px;
+        }
+        
+        .country-header[data-country="nz"] .country-title-wrapper i.country-flag {
+            background-image: url('https://flagcdn.com/w40/nz.png');
+        }
+        
+        .country-header[data-country="gb"] .country-title-wrapper i.country-flag {
+            background-image: url('https://flagcdn.com/w40/gb.png');
+        }
+        
+        /* 学校卡片样式 */
+        .school-item {
+            margin-bottom: 15px;
+            border-radius: 8px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid #e8e8e8;
+            position: relative;
+        }
+        
+        .school-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+            border-color: #d0d0d0;
+        }
+        
+        .school-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 16px;
+            background: linear-gradient(to right, #f5f7fa, #ffffff);
+            border-bottom: 1px solid #e0e0e0;
+            position: relative;
+        }
+        
+        .school-header::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background-color: #1890ff;
+        }
+        
+        .school-name {
+            display: flex;
+            align-items: center;
+            font-size: 15px;
+            font-weight: 500;
+            color: #262626;
+        }
+        
+        .school-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height: 26px;
+            background-color: #1890ff;
+            color: white;
+            border-radius: 50%;
+            margin-right: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(24, 144, 255, 0.2);
+        }
+        
+        .school-tag {
+            display: inline-block;
+            padding: 3px 8px;
+            margin-left: 10px;
+            font-size: 12px;
+            border-radius: 4px;
+            font-weight: 500;
+            background-color: #fff7e6;
+            color: #fa8c16;
+            border: 1px solid #ffd591;
+        }
+        
+        .school-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .action-icon {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #595959;
+            border-radius: 4px;
+            transition: all 0.2s;
+            margin-left: 4px;
+            position: relative;
+        }
+        
+        /* 确保展开/收起按钮没有背景和边框 */
+        .action-icon.toggle-btn {
+            background: transparent;
+            border: none;
+            box-shadow: none;
+        }
+        
+        .action-icon:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #1890ff;
+        }
+        
+        .action-icon.sync-btn {
+            color: #1890ff;
+        }
+        
+        .action-icon.sync-btn.disabled {
+            color: #d9d9d9;
+            cursor: not-allowed;
+        }
+        
+        .action-icon.lock-btn {
+            color: #1890ff;
+        }
+        
+        .action-icon.lock-btn.locked {
+            color: #fa8c16;
+        }
+        
+        /* 提示框样式 */
+        .tooltip {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.75);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            display: none;
+            z-index: 100;
+            height: 24px;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .action-icon:hover .tooltip,
+        .action-btn:hover .tooltip {
+            display: flex;
+        }
+        
+        /* 更多菜单样式 */
+        .more-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: white;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            width: 160px;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .more-menu.show {
+            display: block;
+        }
+        
+        .more-menu-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .more-menu-item:hover {
+            background-color: #f5f5f5;
+            color: #1890ff;
+        }
+        
+        /* 确保更多菜单不会被截断 */
+        .school-item {
+            overflow: visible;
+        }
+        
+        /* 确保只有当前悬停的子菜单项显示效果 */
+        .more-menu-item {
+            color: #595959;
+        }
+        
+        .more-menu-item i {
+            margin-right: 8px;
+            width: 16px;
+            text-align: center;
+        }
+        
+        .school-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            padding: 5px;
+            background-color: #fff;
+            border-top: 1px dashed #f0f0f0;
+        }
+        
+        .school-info .form-row {
+            grid-column: span 1;
+            width: 100%;
+            margin-bottom: 12px;
+            padding: 0;
+        }
+        
+        .school-info .form-row:has(.form-label:contains("专业名称")),
+        .school-info .form-row:has(.form-label:contains("补充说明")),
+        .school-info .form-row:has(.form-label:contains("专业链接")) {
+            grid-column: 1;
+        }
+        
+        .school-info .form-row:has(.form-label:contains("学制")),
+        .school-info .form-row:has(.form-label:contains("校区")),
+        .school-info .form-row:has(.form-label:contains("院系")) {
+            grid-column: 2;
+        }
+        
+        .school-info .form-row:has(.form-label:contains("学费")),
+        .school-info .form-row:has(.form-label:contains("开课日期")),
+        .school-info .form-row:has(.form-label:contains("申请费用")) {
+            grid-column: 3;
+        }
+        
+        .school-info .form-row:has(.form-label:contains("专业名称")),
+        .school-info .form-row:has(.form-label:contains("补充说明")),
+        .school-info .form-row:has(.form-label:contains("专业链接")) {
+            width: 100%;
+        }
+        
+        .input-textarea {
+            width: 100%;
+            padding: 8px 0;
+            border: none;
+            font-size: 14px;
+            color: #333;
+            min-height: 60px;
+            max-height: 120px;
+            resize: vertical;
+            background-color: transparent;
+            pointer-events: none;
+        }
+        
+        .input-textarea.editable {
+            background-color: #fff;
+            border-bottom: 1px solid #40a9ff;
+            pointer-events: auto;
+        }
+
+        .toggle-btn {
+            margin-left: 10px;
+            cursor: pointer;
+            padding: 4px 10px;
+            background: #f5f7fa;
+            border-radius: 4px;
+            font-size: 12px;
+            transition: all 0.2s ease;
+            border: 1px solid #e8e8e8;
+        }
+        
+        .toggle-btn:hover {
+            background: #e6f7ff;
+            color: #1890ff;
+            border-color: #91d5ff;
+        }
+        
+        .toggle-btn:hover {
+            background: #e6f7ff;
+            color: #1890ff;
+        }
+        
+        .info-item {
+            width: 50%;
+            margin-bottom: 15px;
+            padding: 0 5px;
+        }
+        
+        .link-style {
+            color: #1890ff;
+            cursor: pointer;
+            text-decoration: none;
+            border-bottom: 1px dashed #1890ff;
+            transition: all 0.3s;
+        }
+        
+        .link-style:hover {
+            color: #40a9ff;
+            border-bottom: 1px solid #40a9ff;
+        }
+        
+        .toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            z-index: 1000;
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .steps-container {
+                overflow-x: auto;
+                padding: 15px 10px;
+            }
+            
+            .step-item {
+                min-width: 80px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                margin-bottom: 20px;
+            }
+            
+            .form-label {
+                width: 100%;
+                margin-bottom: 8px;
+                padding-top: 0;
+            }
+            
+            .info-item {
+                width: 100%;
+            }
+            
+            .school-info {
+                display: flex;
+                flex-direction: column;
+                padding: 12px;
+            }
+            
+            .school-info .form-row {
+                width: 100%;
+            }
+            
+            .school-name {
+                font-size: 13px;
+                max-width: 100%;
+                margin-bottom: 5px;
+                padding-right: 40px;
+            }
+            
+            .school-actions {
+                position: absolute;
+                right: 15px;
+                top: 10px;
+            }
+            
+            .school-header {
+                position: relative;
+                padding-bottom: 15px;
+            }
+        }
+
+        /* 文本区域的编辑图标位置调整 */
+        .form-input .edit-icon[style*="align-self: flex-start"] {
+            top: 8px;
+            transform: none;
+        }
+
+        /* 恢复可展开行的功能 */
+        .school-info .form-row.expandable-row {
+            display: none;
+        }
+
+        .school-info.expanded .form-row.expandable-row {
+            display: grid;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <div class="header-item">学号： XTU0405</div>
+            <div class="header-item">申请学生: 张三</div>
+            <div class="header-item">背景学历: 本科</div>
+            <div class="header-item">申请学历: 硕士</div>
+        </div>
+    </div>
+    
+    <div class="steps-container">
+        <div class="step-item step-active">
+            <div class="step-number">1</div>
+            <div class="step-text">获取留学方案</div>
+        </div>
+        <div class="step-item">
+            <div class="step-number">2</div>
+            <div class="step-text">确认申请院校</div>
+        </div>
+        <div class="step-item">
+            <div class="step-number">3</div>
+            <div class="step-text">提交申请材料</div>
+        </div>
+        <div class="step-item">
+            <div class="step-number">4</div>
+            <div class="step-text">获取院校Offer</div>
+        </div>
+        <div class="step-item">
+            <div class="step-number">5</div>
+            <div class="step-text">接受Offer录取</div>
+        </div>
+        <div class="step-item">
+            <div class="step-number">6</div>
+            <div class="step-text">原文凭证材料</div>
+        </div>
+        <div class="step-item">
+            <div class="step-number">7</div>
+            <div class="step-text">获取签证结果</div>
+        </div>
+        <div class="step-item">
+            <div class="step-number">8</div>
+            <div class="step-text">行前服务办理</div>
+        </div>
+    </div>
+    
+    <div class="main-container">
+        <div class="tab-header">
+            <div>
+                <div class="tab-item tab-active">留学方案</div>
+                <div class="tab-item tab">资源跟进方案</div>
+            </div>
+            <div class="tab-actions">
+                <button class="action-btn icon-only"><i class="fas fa-download action-btn-icon"></i><div class="tooltip">下载方案模板</div></button>
+                <button class="action-btn icon-only"><i class="fas fa-plus-circle action-btn-icon"></i><div class="tooltip">查看更多方案</div></button>
+                <button class="action-btn"><i class="fas fa-user-tie action-btn-icon"></i>提交人工优化<div class="tooltip">提交给顾问优化</div></button>
+                <button class="action-btn highlight"><i class="fas fa-sync action-btn-icon"></i>重新推荐方案<div class="tooltip">重新生成推荐方案</div></button>
+            </div>
+        </div>
+        
+        <div class="form-container">
+            <div class="form-notice">
+                <span class="notice-icon"><i class="fas fa-info-circle"></i></span>
+                <span>您可以从以下方案中选择您要申请的学校和专业，点击【下一步】确定。建议申请3-5所院校。</span>
+            </div>
+            
+            <div class="country-group">
+                <div class="country-header" data-country="nz">
+                    <div class="country-title-wrapper">
+                        <i class="country-flag"></i>
+                        <span data-count="(4)">新西兰</span>
+                    </div>
+                    <div class="country-toggle-btn">
+                        <i class="fas fa-chevron-up"></i>
+                    </div>
+                </div>
+                
+                <div class="country-content">
+                    <div class="school-item">
+                        <div class="school-header">
+                            <div class="school-name">
+                                <div class="school-number">1</div>
+                                奥克兰大学/University of Auckland
+                                <div class="school-tag">冲刺</div>
+                            </div>
+                            <div class="school-actions">
+                                <div class="action-icon sync-btn" title="同步方案">
+                                    <i class="fas fa-sync-alt"></i>
+                                    <div class="tooltip">点击同步方案至申请院校</div>
+                                </div>
+                                <div class="action-icon lock-btn" title="方案锁定">
+                                    <i class="fas fa-unlock"></i>
+                                    <div class="tooltip">点击锁定/解锁方案</div>
+                                </div>
+                                <div class="action-icon more-btn" title="更多功能">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                    <div class="tooltip">更多功能</div>
+                                    <div class="more-menu">
+                                        <div class="more-menu-item">
+                                            <i class="fas fa-copy"></i>复制方案信息
+                                        </div>
+                                        <div class="more-menu-item">
+                                            <i class="fas fa-list-check"></i>查看材料清单
+                                        </div>
+                                        <div class="more-menu-item">
+                                            <i class="fas fa-trash"></i>删除当前方案
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="action-icon toggle-btn" title="展开/收起">
+                                    <i class="fas fa-chevron-down"></i>
+                                    <div class="tooltip">展开/收起详细信息</div>
+                                </div>
+                            </div>
+                        </div>
+                    <div class="school-info">
+                        <div class="form-row">
+                            <div class="form-label required">专业名称</div>
+                            <div class="form-input">
+                                <input type="text" class="input-text" value="软件工程(Data Science方向)/Software Engineering" />
+                                <i class="fas fa-edit edit-icon"></i>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label required">学制</div>
+                            <div class="form-input">
+                                <input type="text" class="input-text" value="4年" />
+                                <i class="fas fa-edit edit-icon"></i>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label required">学费</div>
+                            <div class="form-input">
+                                <input type="text" class="input-text" value="42,000 NZD/年" />
+                                <i class="fas fa-edit edit-icon"></i>
+                            </div>
+                        </div>
+                        <div class="form-row expandable-row">
+                            <div class="form-label">校区</div>
+                            <div class="form-input">
+                                <input type="text" class="input-text" value="City Campus" />
+                                <i class="fas fa-edit edit-icon"></i>
+                            </div>
+                        </div>
+                        <div class="form-row expandable-row">
+                            <div class="form-label">开课日期</div>
+                            <div class="form-input">
+                                <input type="text" class="input-text" value="2024年7月" />
+                                <i class="fas fa-edit edit-icon"></i>
+                            </div>
+                        </div>
+                        <div class="form-row expandable-row">
+                            <div class="form-label">院系</div>
+                            <div class="form-input">
+                                <input type="text" class="input-text" value="工程学院/Faculty of Engineering" />
+                                <i class="fas fa-edit edit-icon"></i>
+                            </div>
+                        </div>
+                        <div class="form-row expandable-row">
+                            <div class="form-label">专业链接</div>
+                            <div class="form-input">
+                                <a href="javascript:void(0)" class="link-style" data-link="https://www.aui.ac.nz/study/study-options/engineering">https://www.aui.ac.nz/study/study-options/engineering</a>
+                            </div>
+                        </div>
+                        <div class="form-row expandable-row">
+                            <div class="form-label">补充说明</div>
+                            <div class="form-input">
+                                <textarea class="input-textarea" readonly>该专业为新西兰工程师协会认证专业</textarea>
+                                <i class="fas fa-edit edit-icon" style="align-self: flex-start; margin-top: 8px;"></i>
+                            </div>
+                        </div>
+                        <div class="form-row expandable-row">
+                            <div class="form-label">申请费用</div>
+                            <div class="form-input">
+                                <input type="text" class="input-text" value="120 NZD" />
+                                <i class="fas fa-edit edit-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+
+                    <div class="school-item">
+                    <div class="school-header">
+                        <div class="school-name">
+                            <div class="school-number">2</div>
+                            惠灵顿维多利亚大学/Victoria University of Wellington
+                            <div class="school-tag">冲刺</div>
+                        </div>
+                        <div class="school-actions">
+                            <div class="action-icon sync-btn" title="同步方案">
+                                <i class="fas fa-sync-alt"></i>
+                                <div class="tooltip">点击同步方案至申请院校</div>
+                            </div>
+                            <div class="action-icon lock-btn" title="方案锁定">
+                                <i class="fas fa-unlock"></i>
+                                <div class="tooltip">点击锁定/解锁方案</div>
+                            </div>
+                            <div class="action-icon more-btn" title="更多功能">
+                                <i class="fas fa-ellipsis-v"></i>
+                                <div class="more-menu">
+                                    <div class="more-menu-item">
+                                        <i class="fas fa-copy"></i>复制方案信息
+                                    </div>
+                                    <div class="more-menu-item">
+                                        <i class="fas fa-list-check"></i>查看材料清单
+                                    </div>
+                                    <div class="more-menu-item">
+                                        <i class="fas fa-trash"></i>删除当前方案
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="action-icon toggle-btn" title="展开/收起">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="school-info">
+                        <div class="form-row">
+                            <div class="form-label required">专业名称</div>
+                            <div class="form-input">
+                                <input type="text" class="input-text" value="人工智能/Artificial Intelligence" />
+                                <i class="fas fa-edit edit-icon"></i>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label required">学制</div>
+                            <div class="form-input">
+                                <input type="text" class="input-text" value="3年" />
+                                <i class="fas fa-edit edit-icon"></i>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-label required">学费</div>
+                            <div class="form-input">
+                                <input type="text" class="input-text" value="38,000 NZD/年" />
+                                <i class="fas fa-edit edit-icon"></i>
+                            </div>
+                        </div>
+                        <div class="form-row expandable-row">
+                            <div class="form-label">校区</div>
+                            <div class="form-input">
+                                <input type="text" class="input-text" value="Kelburn Campus" />
+                                <i class="fas fa-edit edit-icon"></i>
+                            </div>
+                        </div>
+                        <div class="form-row expandable-row">
+                            <div class="form-label">开课日期</div>
+                            <div class="form-input">
+                                <input type="text" class="input-text" value="2024年7月" />
+                                <i class="fas fa-edit edit-icon"></i>
+                            </div>
+                        </div>
+                        <div class="form-row expandable-row">
+                            <div class="form-label">院系</div>
+                            <div class="form-input">
+                                <input type="text" class="input-text" value="计算机科学学院/School of Computer Science" />
+                                <i class="fas fa-edit edit-icon"></i>
+                            </div>
+                        </div>
+                        <div class="form-row expandable-row">
+                            <div class="form-label">专业链接</div>
+                            <div class="form-input">
+                                <a href="javascript:void(0)" class="link-style" data-link="https://www.vuw.ac.nz/study/programmes-courses/computer-science">https://www.vuw.ac.nz/study/programmes-courses/computer-science</a>
+                            </div>
+                        </div>
+                        <div class="form-row expandable-row">
+                            <div class="form-label">补充说明</div>
+                            <div class="form-input">
+                                <textarea class="input-textarea" readonly>该专业为新西兰计算机协会认证专业</textarea>
+                                <i class="fas fa-edit edit-icon" style="align-self: flex-start; margin-top: 8px;"></i>
+                            </div>
+                        </div>
+                        <div class="form-row expandable-row">
+                            <div class="form-label">申请费用</div>
+                            <div class="form-input">
+                                <input type="text" class="input-text" value="100 NZD" />
+                                <i class="fas fa-edit edit-icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                
+                    <div class="school-item">
+                    <div class="school-header">
+                        <div class="school-name">
+                            <div class="school-number">3</div>
+                            坎特伯雷大学/University of Canterbury
+                            <div class="school-tag">冲刺</div>
+                        </div>
+                        <div class="school-actions">
+                            <div class="action-icon sync-btn" title="同步方案">
+                                <i class="fas fa-sync-alt"></i>
+                                <div class="tooltip">点击同步方案至申请院校</div>
+                            </div>
+                            <div class="action-icon lock-btn" title="方案锁定">
+                                <i class="fas fa-unlock"></i>
+                                <div class="tooltip">点击锁定/解锁方案</div>
+                            </div>
+                            <div class="action-icon more-btn" title="更多功能">
+                                <i class="fas fa-ellipsis-v"></i>
+                                <div class="more-menu">
+                                    <div class="more-menu-item">
+                                        <i class="fas fa-copy"></i>复制方案信息
+                                    </div>
+                                    <div class="more-menu-item">
+                                        <i class="fas fa-list-check"></i>查看材料清单
+                                    </div>
+                                    <div class="more-menu-item">
+                                        <i class="fas fa-trash"></i>删除当前方案
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="action-icon toggle-btn" title="展开/收起">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="school-info">
+                    <div class="form-row">
+                        <div class="form-label required">专业名称</div>
+                        <div class="form-input">
+                            <input type="text" class="input-text" value="商学院 - 金融管理/Business School - Financial Management" />
+                            <i class="fas fa-edit edit-icon"></i>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label required">学制</div>
+                        <div class="form-input">
+                            <input type="text" class="input-text" value="3年" />
+                            <i class="fas fa-edit edit-icon"></i>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label required">学费</div>
+                        <div class="form-input">
+                            <input type="text" class="input-text" value="36,000 NZD/年" />
+                            <i class="fas fa-edit edit-icon"></i>
+                        </div>
+                    </div>
+                    <div class="form-row expandable-row">
+                        <div class="form-label">校区</div>
+                        <div class="form-input">
+                            <input type="text" class="input-text" value="Ilam Campus" />
+                            <i class="fas fa-edit edit-icon"></i>
+                        </div>
+                    </div>
+                    <div class="form-row expandable-row">
+                        <div class="form-label">开课日期</div>
+                        <div class="form-input">
+                            <input type="text" class="input-text" value="2024年秋季" />
+                            <i class="fas fa-edit edit-icon"></i>
+                        </div>
+                    </div>
+                    <div class="form-row expandable-row">
+                        <div class="form-label">院系</div>
+                        <div class="form-input">
+                            <input type="text" class="input-text" value="商学院" />
+                            <i class="fas fa-edit edit-icon"></i>
+                        </div>
+                    </div>
+                    <div class="form-row expandable-row">
+                        <div class="form-label">专业链接</div>
+                        <div class="form-input">
+                            <a href="javascript:void(0)" class="link-style" data-link="https://www.canterbury.ac.nz/study/subjects/business-and-finance/">https://www.canterbury.ac.nz/study/subjects/business-and-finance/</a>
+                        </div>
+                    </div>
+                    <div class="form-row expandable-row">
+                        <div class="form-label">补充说明</div>
+                        <div class="form-input">
+                            <textarea class="input-textarea" readonly>该专业为新西兰商学院认证专业</textarea>
+                            <i class="fas fa-edit edit-icon" style="align-self: flex-start; margin-top: 8px;"></i>
+                        </div>
+                    </div>
+                    <div class="form-row expandable-row">
+                        <div class="form-label">申请费用</div>
+                        <div class="form-input">
+                            <input type="text" class="input-text" value="100 NZD" />
+                            <i class="fas fa-edit edit-icon"></i>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                
+                    <div class="school-item">
+                    <div class="school-header">
+                        <div class="school-name">
+                            <div class="school-number">4</div>
+                            新西兰奥克兰理工大学/Auckland University of Technology
+                            <div class="school-tag">冲刺</div>
+                        </div>
+                        <div class="school-actions">
+                            <div class="action-icon sync-btn" title="同步方案">
+                                <i class="fas fa-sync-alt"></i>
+                                <div class="tooltip">点击同步方案至申请院校</div>
+                            </div>
+                            <div class="action-icon lock-btn" title="方案锁定">
+                                <i class="fas fa-unlock"></i>
+                                <div class="tooltip">点击锁定/解锁方案</div>
+                            </div>
+                            <div class="action-icon more-btn" title="更多功能">
+                                <i class="fas fa-ellipsis-v"></i>
+                                <div class="more-menu">
+                                    <div class="more-menu-item">
+                                        <i class="fas fa-copy"></i>复制方案信息
+                                    </div>
+                                    <div class="more-menu-item">
+                                        <i class="fas fa-list-check"></i>查看材料清单
+                                    </div>
+                                    <div class="more-menu-item">
+                                        <i class="fas fa-trash"></i>删除当前方案
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="action-icon toggle-btn" title="展开/收起">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="school-info">
+                        <div class="form-row">
+                            <div class="form-label required">专业名称</div>
+                            <div class="form-input">
+                                <input type="text" class="input-text" value="数字媒体设计/Digital Media Design" />
+                                <i class="fas fa-edit edit-icon"></i>
+                            </div>
+                        </div>
+                    <div class="form-row">
+                        <div class="form-label required">学制</div>
+                        <div class="form-input">
+                            <input type="text" class="input-text" value="3年" />
+                            <i class="fas fa-edit edit-icon"></i>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-label required">学费</div>
+                        <div class="form-input">
+                            <input type="text" class="input-text" value="35,000 NZD/年" />
+                            <i class="fas fa-edit edit-icon"></i>
+                        </div>
+                    </div>
+                    <div class="form-row expandable-row">
+                        <div class="form-label">校区</div>
+                        <div class="form-input">
+                            <input type="text" class="input-text" value="City Campus" />
+                            <i class="fas fa-edit edit-icon"></i>
+                        </div>
+                    </div>
+                    <div class="form-row expandable-row">
+                        <div class="form-label">开课日期</div>
+                        <div class="form-input">
+                            <input type="text" class="input-text" value="2024年7月" />
+                            <i class="fas fa-edit edit-icon"></i>
+                        </div>
+                    </div>
+                    <div class="form-row expandable-row">
+                        <div class="form-label">院系</div>
+                        <div class="form-input">
+                            <input type="text" class="input-text" value="设计与创意技术学院" />
+                            <i class="fas fa-edit edit-icon"></i>
+                        </div>
+                    </div>
+                    <div class="form-row expandable-row">
+                        <div class="form-label">专业链接</div>
+                        <div class="form-input">
+                            <a href="javascript:void(0)" class="link-style" data-link="https://www.aut.ac.nz/study/study-options/design-and-creative-technologies">https://www.aut.ac.nz/study/study-options/design-and-creative-technologies</a>
+                        </div>
+                    </div>
+                    <div class="form-row expandable-row">
+                        <div class="form-label">补充说明</div>
+                        <div class="form-input">
+                            <textarea class="input-textarea" readonly>该专业为新西兰设计协会认证专业</textarea>
+                            <i class="fas fa-edit edit-icon" style="align-self: flex-start; margin-top: 8px;"></i>
+                        </div>
+                    </div>
+                    <div class="form-row expandable-row">
+                        <div class="form-label">申请费用</div>
+                        <div class="form-input">
+                            <input type="text" class="input-text" value="110 NZD" />
+                            <i class="fas fa-edit edit-icon"></i>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="country-group">
+                <div class="country-header" data-country="gb">
+                    <div class="country-title-wrapper">
+                        <i class="country-flag"></i>
+                        <span data-count="(3)">英国</span>
+                    </div>
+                    <div class="country-toggle-btn">
+                        <i class="fas fa-chevron-up"></i>
+                    </div>
+                </div>
+                
+                <div class="country-content">
+                    <div class="school-item">
+                        <div class="school-header">
+                            <div class="school-name">
+                                <div class="school-number">5</div>
+                                剑桥大学/University of Cambridge
+                                <div class="school-tag">冲刺</div>
+                            </div>
+                            <div class="school-actions">
+                                <div class="action-icon sync-btn" title="同步方案">
+                                    <i class="fas fa-sync-alt"></i>
+                                    <div class="tooltip">点击同步方案至申请院校</div>
+                                </div>
+                                <div class="action-icon lock-btn" title="方案锁定">
+                                    <i class="fas fa-unlock"></i>
+                                    <div class="tooltip">点击锁定/解锁方案</div>
+                                </div>
+                                <div class="action-icon more-btn" title="更多功能">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                    <div class="tooltip">更多功能</div>
+                                    <div class="more-menu">
+                                        <div class="more-menu-item">
+                                            <i class="fas fa-copy"></i>复制方案信息
+                                        </div>
+                                        <div class="more-menu-item">
+                                            <i class="fas fa-list-check"></i>查看材料清单
+                                        </div>
+                                        <div class="more-menu-item">
+                                            <i class="fas fa-trash"></i>删除当前方案
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="action-icon toggle-btn" title="展开/收起">
+                                    <i class="fas fa-chevron-down"></i>
+                                    <div class="tooltip">展开/收起详细信息</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="school-info">
+                            <div class="form-row">
+                            <div class="form-label required">专业名称</div>
+                            <div class="form-input">
+                                <input type="text" class="input-text" value="计算机科学/Computer Science" />
+                                <i class="fas fa-edit edit-icon"></i>
+                            </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-label required">学制</div>
+                                <div class="form-input">
+                                    <input type="text" class="input-text" value="3年" />
+                                    <i class="fas fa-edit edit-icon"></i>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-label required">学费</div>
+                                <div class="form-input">
+                                    <input type="text" class="input-text" value="35,000 GBP/年" />
+                                    <i class="fas fa-edit edit-icon"></i>
+                                </div>
+                            </div>
+                            <div class="form-row expandable-row">
+                                <div class="form-label">校区</div>
+                                <div class="form-input">
+                                    <input type="text" class="input-text" value="Main Campus" />
+                                    <i class="fas fa-edit edit-icon"></i>
+                                </div>
+                            </div>
+                            <div class="form-row expandable-row">
+                                <div class="form-label">开课日期</div>
+                                <div class="form-input">
+                                    <input type="text" class="input-text" value="2024年10月" />
+                                    <i class="fas fa-edit edit-icon"></i>
+                                </div>
+                            </div>
+                            <div class="form-row expandable-row">
+                                <div class="form-label">院系</div>
+                                <div class="form-input">
+                                    <input type="text" class="input-text" value="计算机科学系/Department of Computer Science" />
+                                    <i class="fas fa-edit edit-icon"></i>
+                                </div>
+                            </div>
+                            <div class="form-row expandable-row">
+                                <div class="form-label">专业链接</div>
+                                <div class="form-input">
+                                    <a href="javascript:void(0)" class="link-style" data-link="https://www.cam.ac.uk/subjects/computer-science">https://www.cam.ac.uk/subjects/computer-science</a>
+                                </div>
+                            </div>
+                            <div class="form-row expandable-row">
+                                <div class="form-label">补充说明</div>
+                                <div class="form-input">
+                                    <textarea class="input-textarea" readonly>该专业为英国计算机学会认证专业</textarea>
+                                    <i class="fas fa-edit edit-icon" style="align-self: flex-start; margin-top: 8px;"></i>
+                                </div>
+                            </div>
+                            <div class="form-row expandable-row">
+                                <div class="form-label">申请费用</div>
+                                <div class="form-input">
+                                    <input type="text" class="input-text" value="75 GBP" />
+                                    <i class="fas fa-edit edit-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="school-item">
+                        <div class="school-header">
+                            <div class="school-name">
+                                <div class="school-number">6</div>
+                                牛津大学/University of Oxford
+                                <div class="school-tag">冲刺</div>
+                            </div>
+                            <div class="school-actions">
+                                <div class="action-icon sync-btn" title="同步方案">
+                                    <i class="fas fa-sync-alt"></i>
+                                    <div class="tooltip">点击同步方案至申请院校</div>
+                                </div>
+                                <div class="action-icon lock-btn" title="方案锁定">
+                                    <i class="fas fa-unlock"></i>
+                                    <div class="tooltip">点击锁定/解锁方案</div>
+                                </div>
+                                <div class="action-icon more-btn" title="更多功能">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                    <div class="tooltip">更多功能</div>
+                                    <div class="more-menu">
+                                        <div class="more-menu-item">
+                                            <i class="fas fa-copy"></i>复制方案信息
+                                        </div>
+                                        <div class="more-menu-item">
+                                            <i class="fas fa-list-check"></i>查看材料清单
+                                        </div>
+                                        <div class="more-menu-item">
+                                            <i class="fas fa-trash"></i>删除当前方案
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="action-icon toggle-btn" title="展开/收起">
+                                    <i class="fas fa-chevron-down"></i>
+                                    <div class="tooltip">展开/收起详细信息</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="school-info">
+                            <div class="form-row">
+                                <div class="form-label required">专业名称</div>
+                                <div class="form-input">
+                                    <input type="text" class="input-text" value="工程科学/Engineering Science" />
+                                    <i class="fas fa-edit edit-icon"></i>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-label required">学制</div>
+                                <div class="form-input">
+                                    <input type="text" class="input-text" value="4年" />
+                                    <i class="fas fa-edit edit-icon"></i>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-label required">学费</div>
+                                <div class="form-input">
+                                    <input type="text" class="input-text" value="37,000 GBP/年" />
+                                    <i class="fas fa-edit edit-icon"></i>
+                                </div>
+                            </div>
+                            <div class="form-row expandable-row">
+                                <div class="form-label">校区</div>
+                                <div class="form-input">
+                                    <input type="text" class="input-text" value="Central Campus" />
+                                    <i class="fas fa-edit edit-icon"></i>
+                                </div>
+                            </div>
+                            <div class="form-row expandable-row">
+                                <div class="form-label">开课日期</div>
+                                <div class="form-input">
+                                    <input type="text" class="input-text" value="2024年10月" />
+                                    <i class="fas fa-edit edit-icon"></i>
+                                </div>
+                            </div>
+                            <div class="form-row expandable-row">
+                                <div class="form-label">院系</div>
+                                <div class="form-input">
+                                    <input type="text" class="input-text" value="工程科学系/Department of Engineering Science" />
+                                    <i class="fas fa-edit edit-icon"></i>
+                                </div>
+                            </div>
+                            <div class="form-row expandable-row">
+                                <div class="form-label">专业链接</div>
+                                <div class="form-input">
+                                    <a href="javascript:void(0)" class="link-style" data-link="https://www.ox.ac.uk/admissions/undergraduate/courses/engineering-science">https://www.ox.ac.uk/admissions/undergraduate/courses/engineering-science</a>
+                                </div>
+                            </div>
+                            <div class="form-row expandable-row">
+                                <div class="form-label">补充说明</div>
+                                <div class="form-input">
+                                    <textarea class="input-textarea" readonly>该专业为英国工程技术学会认证专业</textarea>
+                                    <i class="fas fa-edit edit-icon" style="align-self: flex-start; margin-top: 8px;"></i>
+                                </div>
+                            </div>
+                            <div class="form-row expandable-row">
+                                <div class="form-label">申请费用</div>
+                                <div class="form-input">
+                                    <input type="text" class="input-text" value="75 GBP" />
+                                    <i class="fas fa-edit edit-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="school-item">
+                        <div class="school-header">
+                            <div class="school-name">
+                                <div class="school-number">7</div>
+                                帝国理工学院/Imperial College London
+                                <div class="school-tag">冲刺</div>
+                            </div>
+                            <div class="school-actions">
+                                <div class="action-icon sync-btn" title="同步方案">
+                                    <i class="fas fa-sync-alt"></i>
+                                    <div class="tooltip">点击同步方案至申请院校</div>
+                                </div>
+                                <div class="action-icon lock-btn" title="方案锁定">
+                                    <i class="fas fa-unlock"></i>
+                                    <div class="tooltip">点击锁定/解锁方案</div>
+                                </div>
+                                <div class="action-icon more-btn" title="更多功能">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                    <div class="tooltip">更多功能</div>
+                                    <div class="more-menu">
+                                        <div class="more-menu-item">
+                                            <i class="fas fa-copy"></i>复制方案信息
+                                        </div>
+                                        <div class="more-menu-item">
+                                            <i class="fas fa-list-check"></i>查看材料清单
+                                        </div>
+                                        <div class="more-menu-item">
+                                            <i class="fas fa-trash"></i>删除当前方案
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="action-icon toggle-btn" title="展开/收起">
+                                    <i class="fas fa-chevron-down"></i>
+                                    <div class="tooltip">展开/收起详细信息</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="school-info">
+                            <div class="form-row">
+                                <div class="form-label required">专业名称</div>
+                                <div class="form-input">
+                                    <input type="text" class="input-text" value="机械工程/Mechanical Engineering" />
+                                    <i class="fas fa-edit edit-icon"></i>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-label required">学制</div>
+                                <div class="form-input">
+                                    <input type="text" class="input-text" value="4年" />
+                                    <i class="fas fa-edit edit-icon"></i>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-label required">学费</div>
+                                <div class="form-input">
+                                    <input type="text" class="input-text" value="34,000 GBP/年" />
+                                    <i class="fas fa-edit edit-icon"></i>
+                                </div>
+                            </div>
+                            <div class="form-row expandable-row">
+                                <div class="form-label">校区</div>
+                                <div class="form-input">
+                                    <input type="text" class="input-text" value="South Kensington Campus" />
+                                    <i class="fas fa-edit edit-icon"></i>
+                                </div>
+                            </div>
+                            <div class="form-row expandable-row">
+                                <div class="form-label">开课日期</div>
+                                <div class="form-input">
+                                    <input type="text" class="input-text" value="2024年10月" />
+                                    <i class="fas fa-edit edit-icon"></i>
+                                </div>
+                            </div>
+                            <div class="form-row expandable-row">
+                                <div class="form-label">院系</div>
+                                <div class="form-input">
+                                    <input type="text" class="input-text" value="机械工程系" />
+                                    <i class="fas fa-edit edit-icon"></i>
+                                </div>
+                            </div>
+                            <div class="form-row expandable-row">
+                                <div class="form-label">专业链接</div>
+                                <div class="form-input">
+                                    <a href="javascript:void(0)" class="link-style" data-link="https://www.imperial.ac.uk/study/courses/undergraduate/mechanical-engineering">https://www.imperial.ac.uk/study/courses/undergraduate/mechanical-engineering</a>
+                                </div>
+                            </div>
+                            <div class="form-row expandable-row">
+                                <div class="form-label">补充说明</div>
+                                <div class="form-input">
+                                    <textarea class="input-textarea" readonly>该专业为英国机械工程师协会认证专业</textarea>
+                                    <i class="fas fa-edit edit-icon" style="align-self: flex-start; margin-top: 8px;"></i>
+                                </div>
+                            </div>
+                            <div class="form-row expandable-row">
+                                <div class="form-label">申请费用</div>
+                                <div class="form-input">
+                                    <input type="text" class="input-text" value="80 GBP" />
+                                    <i class="fas fa-edit edit-icon"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-footer">
+                <div class="right-actions">
+                    <button class="btn btn-primary"><i class="fas fa-arrow-right btn-icon"></i>下一步</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 标签页切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabItems = document.querySelectorAll('.tab-item');
+            
+            tabItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // 移除所有标签的激活状态
+                    tabItems.forEach(tab => tab.classList.remove('tab-active'));
+                    // 为当前点击的标签添加激活状态
+                    this.classList.add('tab-active');
+                });
+            });
+            
+            // 学校卡片展开/收起功能
+            const toggleBtns = document.querySelectorAll('.toggle-btn');
+            toggleBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const schoolInfo = this.closest('.school-header').nextElementSibling;
+                    schoolInfo.classList.toggle('expanded');
+                    
+                    // 更改图标方向
+                    const icon = this.querySelector('i');
+                    if (icon) {
+                        if (schoolInfo.classList.contains('expanded')) {
+                            icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+                        } else {
+                            icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+                        }
+                    }
+                });
+            });
+            
+            // 方案卡片功能按钮交互
+            // 同步方案按钮
+            const syncBtns = document.querySelectorAll('.sync-btn');
+            syncBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (!this.classList.contains('disabled')) {
+                        this.classList.add('disabled');
+                        this.querySelector('i').classList.replace('fa-sync-alt', 'fa-check');
+                        this.querySelector('.tooltip').textContent = '已同步';
+                        
+                        // 显示提示信息
+                        showToast('方案已同步至申请院校');
+                    }
+                });
+            });
+            
+            // 方案锁定按钮
+            const lockBtns = document.querySelectorAll('.lock-btn');
+            lockBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (this.classList.contains('locked')) {
+                        this.classList.remove('locked');
+                        this.querySelector('i').classList.replace('fa-lock', 'fa-unlock');
+                        this.querySelector('.tooltip').textContent = '方案锁定';
+                        showToast('方案已解锁');
+                    } else {
+                        this.classList.add('locked');
+                        this.querySelector('i').classList.replace('fa-unlock', 'fa-lock');
+                        this.querySelector('.tooltip').textContent = '方案解锁';
+                        showToast('方案已锁定，不会被重新推荐刷新');
+                    }
+                });
+            });
+            
+            // 更多功能菜单
+            const moreBtns = document.querySelectorAll('.more-btn');
+            moreBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const menu = this.querySelector('.more-menu');
+                    menu.classList.toggle('show');
+                });
+            });
+            
+            // 点击页面其他地方关闭更多菜单
+            document.addEventListener('click', function() {
+                document.querySelectorAll('.more-menu').forEach(menu => {
+                    menu.classList.remove('show');
+                });
+            });
+            
+            // 更多菜单项点击事件
+            document.querySelectorAll('.more-menu-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const action = this.textContent.trim();
+                    if (action.includes('复制方案信息')) {
+                        showToast('方案信息已复制到剪贴板');
+                    } else if (action.includes('查看材料清单')) {
+                        showToast('正在查看材料清单');
+                    } else if (action.includes('删除当前方案')) {
+                        const schoolItem = this.closest('.school-item');
+                        if (schoolItem) {
+                            schoolItem.remove();
+                            showToast('方案已删除');
+                        }
+                    }
+                    // 关闭菜单
+                    this.closest('.more-menu').classList.remove('show');
+                });
+            });
+            
+            // 提示信息显示函数
+            function showToast(message) {
+                let toast = document.querySelector('.toast');
+                if (!toast) {
+                    toast = document.createElement('div');
+                    toast.className = 'toast';
+                    document.body.appendChild(toast);
+                }
+                toast.textContent = message;
+                toast.style.display = 'block';
+                
+                setTimeout(() => {
+                    toast.style.display = 'none';
+                }, 2000);
+            }
+            
+            // 国家栏展开/收起功能
+            const countryToggleBtns = document.querySelectorAll('.country-toggle-btn');
+            countryToggleBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const countryHeader = this.closest('.country-header');
+                    const countryContent = countryHeader.nextElementSibling;
+                    const allSchoolItems = [];
+                    
+                    // 获取该国家下所有学校卡片
+                    let nextElement = countryHeader.nextElementSibling;
+                    while (nextElement && !nextElement.classList.contains('country-header')) {
+                        if (nextElement.classList.contains('school-item')) {
+                            allSchoolItems.push(nextElement);
+                        }
+                        nextElement = nextElement.nextElementSibling;
+                    }
+                    
+                    // 创建一个包裹所有学校卡片的容器，如果不存在
+                    let contentWrapper = countryHeader.nextElementSibling;
+                    if (!contentWrapper || !contentWrapper.classList.contains('country-content')) {
+                        contentWrapper = document.createElement('div');
+                        contentWrapper.className = 'country-content';
+                        countryHeader.after(contentWrapper);
+                        
+                        // 将所有学校卡片移动到容器中
+                        allSchoolItems.forEach(item => {
+                            contentWrapper.appendChild(item);
+                        });
+                    }
+                    
+                    // 切换展开/收起状态
+                    contentWrapper.classList.toggle('collapsed');
+                    
+                    // 更改图标方向
+                    const icon = this.querySelector('i');
+                    if (contentWrapper.classList.contains('collapsed')) {
+                        icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+                    } else {
+                        icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+                    }
+                });
+            });
+            
+            // 初始化国家内容包装器
+            document.querySelectorAll('.country-header').forEach(header => {
+                const allSchoolItems = [];
+                let nextElement = header.nextElementSibling;
+                
+                while (nextElement && !nextElement.classList.contains('country-header')) {
+                    if (nextElement.classList.contains('school-item')) {
+                        allSchoolItems.push(nextElement);
+                    }
+                    nextElement = nextElement.nextElementSibling;
+                }
+                
+                if (allSchoolItems.length > 0) {
+                    const contentWrapper = document.createElement('div');
+                    contentWrapper.className = 'country-content';
+                    header.after(contentWrapper);
+                    
+                    allSchoolItems.forEach(item => {
+                        contentWrapper.appendChild(item);
+                    });
+                }
+            });
+            
+            // 编辑按钮功能
+            const editIcons = document.querySelectorAll('.edit-icon');
+            editIcons.forEach(icon => {
+                icon.addEventListener('click', function() {
+                    const input = this.closest('.form-input').querySelector('.input-text, .input-textarea');
+                    const isEditable = input.classList.toggle('editable');
+                    input.readOnly = !isEditable;
+                    
+                    // 切换图标
+                    if (isEditable) {
+                        this.classList.remove('fa-edit');
+                        this.classList.add('fa-check');
+                    } else {
+                        this.classList.remove('fa-check');
+                        this.classList.add('fa-edit');
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="drawer.js"></script>
+</body>
+</html>
+
+<style>
+    /* 更多菜单样式 */
+    .more-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: white;
+        border-radius: 4px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        width: 160px;
+        z-index: 100;
+        display: none;
+    }
+
+    .more-menu.show {
+        display: block;
+    }
+
+    .more-menu-item {
+        padding: 8px 12px;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+    }
+
+    .more-menu-item:hover {
+        background-color: #f5f5f5;
+        color: #1890ff;
+    }
+
+    .more-menu-item i {
+        margin-right: 8px;
+        width: 16px;
+        text-align: center;
+    }
+    
+    .tooltip {
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 0px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        white-space: nowrap;
+        /* height: 10px; */
+        top: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s, visibility 0.2s;
+    }
+    
+    .action-icon:hover .tooltip {
+        opacity: 1;
+        visibility: visible;
+    }
+</style>
+</File>
