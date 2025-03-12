@@ -1,0 +1,280 @@
+/* 抽屉组件样式 */
+.drawer-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.drawer-backdrop.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.drawer-container {
+    position: fixed;
+    top: 0;
+    right: -500px; /* 初始位置在屏幕外 */
+    width: 500px;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
+    z-index: 1001;
+    transition: right 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.drawer-container.active {
+    right: 0;
+}
+
+.drawer-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid #e8e8e8;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.drawer-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: #262626;
+}
+
+.drawer-close {
+    cursor: pointer;
+    color: #595959;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.drawer-close:hover {
+    color: #1890ff;
+}
+
+.drawer-body {
+    flex: 1;
+    padding: 24px;
+    overflow-y: auto;
+}
+
+.drawer-footer {
+    padding: 16px 24px;
+    border-top: 1px solid #e8e8e8;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.drawer-btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+}
+
+.drawer-btn-default {
+    background-color: #f0f0f0;
+    color: #595959;
+}
+
+.drawer-btn-default:hover {
+    background-color: #e0e0e0;
+}
+
+.drawer-btn-primary {
+    background-color: #1890ff;
+    color: #fff;
+}
+
+.drawer-btn-primary:hover {
+    background-color: #40a9ff;
+}
+
+/* 表单样式 */
+.drawer-form-section {
+    margin-bottom: 24px;
+}
+
+.drawer-form-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: #262626;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.drawer-form-title-action {
+    font-size: 13px;
+    color: #1890ff;
+    cursor: pointer;
+}
+
+.drawer-form-title-action:hover {
+    color: #40a9ff;
+}
+
+.drawer-form-group {
+    margin-bottom: 16px;
+}
+
+.drawer-form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #595959;
+}
+
+.drawer-form-label.required::before {
+    content: '*';
+    color: #f5222d;
+    margin-right: 4px;
+}
+
+.drawer-form-input,
+.drawer-form-select,
+.drawer-form-textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.drawer-form-input:focus,
+.drawer-form-select:focus,
+.drawer-form-textarea:focus {
+    border-color: #40a9ff;
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+    outline: none;
+}
+
+.drawer-form-textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.drawer-form-hint {
+    font-size: 12px;
+    color: #8c8c8c;
+    margin-top: 4px;
+}
+
+.drawer-form-error {
+    font-size: 12px;
+    color: #f5222d;
+    margin-top: 4px;
+}
+
+/* 教育背景卡片样式 */
+.education-card {
+    border: 1px solid #e8e8e8;
+    border-radius: 4px;
+    padding: 16px;
+    margin-bottom: 16px;
+    position: relative;
+}
+
+.education-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.education-card-title {
+    font-weight: 500;
+    color: #262626;
+}
+
+.education-card-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.education-card-action {
+    cursor: pointer;
+    color: #595959;
+    transition: color 0.3s;
+}
+
+.education-card-action:hover {
+    color: #1890ff;
+}
+
+.education-card-action.delete:hover {
+    color: #f5222d;
+}
+
+/* 加载动画样式 */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.loading-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #1890ff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-text {
+    margin-top: 16px;
+    font-size: 14px;
+    color: #595959;
+}
+
+/* 字段计数器 */
+.char-counter {
+    font-size: 12px;
+    color: #8c8c8c;
+    text-align: right;
+    margin-top: 4px;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .drawer-container {
+        width: 100%;
+        right: -100%;
+    }
+}

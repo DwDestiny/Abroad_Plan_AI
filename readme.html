@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>留学方案定校功能需求文档</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        
+        :root {
+            --primary-color: #1890ff;
+            --border-color: #e8e8e8;
+            --text-primary: #262626;
+            --text-secondary: #595959;
+            --bg-light: #f5f7fa;
+            --shadow-light: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-primary);
+            line-height: 1.5;
+            font-size: 14px;
+            padding-bottom: 50px;
+        }
+        
+        .header {
+            background-color: #fff;
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-light);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .header-version {
+            font-size: 14px;
+            color: var(--primary-color);
+            background-color: #e6f7ff;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-left: 12px;
+        }
+        
+        .main-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: var(--shadow-light);
+            padding: 24px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 10px;
+            color: var(--primary-color);
+        }
+        
+        .section-content {
+            margin-bottom: 30px;
+        }
+        
+        .requirement-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        .requirement-table th, 
+        .requirement-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .requirement-table th {
+            background-color: #fafafa;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+        
+        .requirement-table tr:hover {
+            background-color: #f5f7fa;
+        }
+        
+        .requirement-table td:first-child {
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 6px;
+            margin-bottom: 4px;
+        }
+        
+        .tag-version {
+            background-color: #e6f7ff;
+            color: #1890ff;
+            border: 1px solid #91d5ff;
+        }
+        
+        .tag-platform {
+            background-color: #f6ffed;
+            color: #52c41a;
+            border: 1px solid #b7eb8f;
+        }
+        
+        .tag-page {
+            background-color: #fff7e6;
+            color: #fa8c16;
+            border: 1px solid #ffe58f;
+        }
+        
+        .feature-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+            padding: 16px;
+            margin-bottom: 16px;
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .feature-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature-title i {
+            margin-right: 8px;
+            color: var(--primary-color);
+        }
+        
+        .feature-description {
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+        
+        .feature-points {
+            padding-left: 24px;
+            margin-bottom: 0;
+        }
+        
+        .feature-points li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+        
+        .feature-points li:last-child {
+            margin-bottom: 0;
+        }
+        
+        .feature-points li::before {
+            content: '';
+            position: absolute;
+            left: -16px;
+            top: 8px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+        }
+        
+        .mockup-section {
+            margin-top: 30px;
+        }
+        
+        .mockup-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+        
+        .mockup-image {
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: var(--shadow-light);
+            margin-bottom: 16px;
+        }
+        
+        .mockup-description {
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+        
+        .notice {
+            background-color: #f0f7ff;
+            padding: 12px 16px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: flex-start;
+            border-left: 4px solid #1890ff;
+        }
+        
+        .notice i {
+            margin-right: 10px;
+            color: #1890ff;
+            margin-top: 3px;
+        }
+        
+        .timeline {
+            position: relative;
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background-color: #e8e8e8;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 24px;
+        }
+        
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: -30px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: #fff;
+            border: 2px solid var(--primary-color);
+            z-index: 1;
+        }
+        
+        .timeline-content {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .timeline-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        
+        .timeline-description {
+            color: var(--text-secondary);
+        }
+        
+        .version-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 8px;
+            background-color: #e6f7ff;
+            color: #1890ff;
+            border: 1px solid #91d5ff;
+        }
+        
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 16px;
+                margin: 10px;
+                border-radius: 8px;
+            }
+            
+            .requirement-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .header {
+                padding: 12px 16px;
+            }
+            
+            .header-title {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-title">留学方案定校功能需求文档<span class="header-version">V2.4</span></div>
+    </div>
+    
+    <div class="main-container">
+        <div class="notice">
+            <i class="fas fa-info-circle"></i>
+            <div>
+                本文档详细描述了留学方案定校功能的需求清单和功能说明，作为开发和测试的参考依据。
+            </div>
+        </div>
+        
+        <div class="section-title">
+            <i class="fas fa-list-check"></i>需求清单概览
+        </div>
+        <div class="section-content">
+            <table class="requirement-table">
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>调整点</th>
+                        <th>需求背景</th>
+                        <th>调整逻辑</th>
+                        <th>版本/平台/页面</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>定校推荐逻辑</td>
+                        <td>优化推荐算法</td>
+                        <td>根据额外录取要求判断用户能否申请，若用户未通过专业本身的录取要求，但通过了额外录取，且要求中表明了适用的学制和小方向，推荐后需标明可申请的学制和小方向</td>
+                        <td>
+                            <div class="tag tag-version">2.4版本</div>
+                            <div class="tag tag-platform">C/B端</div>
+                            <div class="tag tag-page">推荐逻辑</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>强化用户筛选</td>
+                        <td>提升用户体验</td>
+                        <td>按原型调整页面，调整布局、增加对应功能，用户可点击重新推荐按钮，触发AI重新推荐，推荐完毕后刷新当前方案列表</td>
+                        <td>
+                            <div class="tag tag-version">2.4版本</div>
+                            <div class="tag tag-platform">B PC端</div>
+                            <div class="tag tag-page">方案制作页</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>方案锁定功能</td>
+                        <td>保留用户偏好</td>
+                        <td>可点击按钮锁定方案，被锁定的方案不再被重新推荐功能刷新，点击后按钮变成已锁定的图标</td>
+                        <td>
+                            <div class="tag tag-version">2.4版本</div>
+                            <div class="tag tag-platform">B PC端</div>
+                            <div class="tag tag-page">方案制作页</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>展示信息优化</td>
+                        <td>提升信息可读性</td>
+                        <td>按UI调整样式，补充信息突出展示，补充信息字段更名为申请建议，强调展示</td>
+                        <td>
+                            <div class="tag tag-version">2.4版本</div>
+                            <div class="tag tag-platform">B 移动/PC</div>
+                            <div class="tag tag-page">方案制作页</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>下载模板优化</td>
+                        <td>提升用户体验</td>
+                        <td>按UI调整样式，补充信息突出展示，字段内容为空则隐藏字段，预览优化，使用iframe页面形式展示内容</td>
+                        <td>
+                            <div class="tag tag-version">2.4版本</div>
+                            <div class="tag tag-platform">B 移动/PC</div>
+                            <div class="tag tag-page">方案制作页</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>补充说明数据维护</td>
+                        <td>数据完整性</td>
+                        <td>库中大量专业缺少该字段，批量补充，数据导入功能增加字段</td>
+                        <td>
+                            <div class="tag tag-version">2.4版本</div>
+                            <div class="tag tag-platform">小希后台</div>
+                            <div class="tag tag-page">院校库</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>海本申硕逻辑优化</td>
+                        <td>扩大适用范围</td>
+                        <td>现有逻辑中，本科申硕，英、澳、美之外背景无法推荐，缺少录取要求，背景国家按照中国推荐</td>
+                        <td>
+                            <div class="tag tag-version">2.4版本</div>
+                            <div class="tag tag-platform">B/C</div>
+                            <div class="tag tag-page">推荐逻辑</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>表单优化</td>
+                        <td>提升用户体验</td>
+                        <td>若背景学历为硕士，成绩类型默认为其他成绩类型</td>
+                        <td>
+                            <div class="tag tag-version">2.4版本</div>
+                            <div class="tag tag-platform">B/C</div>
+                            <div class="tag tag-page">入口页/制作页/分享页</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>排序方式增加</td>
+                        <td>增强筛选能力</td>
+                        <td>增加qs排名、学费、学制的判断条件或排序</td>
+                        <td>
+                            <div class="tag tag-version">2.5版本</div>
+                            <div class="tag tag-platform"></div>
+                            <div class="tag tag-page"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>ALevel分数表单优化</td>
+                        <td>完善表单功能</td>
+                        <td></td>
+                        <td>
+                            <div class="tag tag-version">2.5版本</div>
+                            <div class="tag tag-platform"></div>
+                            <div class="tag tag-page"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td>ALevel分数匹配逻辑</td>
+                        <td>优化匹配算法</td>
+                        <td></td>
+                        <td>
+                            <div class="tag tag-version">2.5版本</div>
+                            <div class="tag tag-platform"></div>
+                            <div class="tag tag-page"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>B端代理申请偏好</td>
+                        <td>提升代理体验</td>
+                        <td></td>
+                        <td>
+                            <div class="tag tag-version">2.5版本</div>
+                            <div class="tag tag-platform"></div>
+                            <div class="tag tag-page"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>13</td>
+                        <td>方案筛选-支持按专业/院校关键词搜索</td>
+                        <td>增强搜索能力</td>
+                        <td></td>
+                        <td>
+                            <div class="tag tag-version">2.5版本</div>
+                            <div class="tag tag-platform"></div>
+                            <div class="tag tag-page"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>14</td>
+                        <td>申请热度、申请通过率展示</td>
+                        <td>提供参考数据</td>
+                        <td></td>
+                        <td>
+                            <div class="tag tag-version">2.5版本</div>
+                            <div class="tag tag-platform"></div>
+                            <div class="tag tag-page"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>15</td>
+                        <td>方案评价功能</td>
+                        <td>收集用户反馈</td>
+                        <td>支持用户对推荐方案进行评分和评价，帮助系统优化推荐算法</td>
+                        <td>
+                            <div class="tag tag-version">2.5版本</div>
+                            <div class="tag tag-platform">B 移动/PC</div>
+                            <div class="tag tag-page">方案制作页</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>16</td>
+                        <td>移动端交互优化，支持刷新与锁定、同步定校</td>
+                        <td>移动端体验提升</td>
+                        <td></td>
+                        <td>
+                            <div class="tag tag-version">2.6版本</div>
+                            <div class="tag tag-platform"></div>
+                            <div class="tag tag-page"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>17</td>
+                        <td>推荐逻辑优化，填完定校信息，补充一次AI推荐定校</td>
+                        <td>智能推荐增强</td>
+                        <td></td>
+                        <td>
+                            <div class="tag tag-version">2.6版本</div>
+                            <div class="tag tag-platform"></div>
+                            <div class="tag tag-page"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>18</td>
+                        <td>提人工后信息更新，后台同步信息，但方案不更新</td>
+                        <td>人工协作优化</td>
+                        <td></td>
+                        <td>
+                            <div class="tag tag-version">2.6版本</div>
+                            <div class="tag tag-platform"></div>
+                            <div class="tag tag-page"></div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="notice">
+                <i class="fas fa-lightbulb"></i>
+                <div>
+                    以上为2.4版本的主要需求清单，后续版本(2.5、2.6)的需求将在相应版本开发前详细规划。
+                </div>
+            </div>
+        </div>
+        
+        <div class="section-title">
+            <i class="fas fa-code-branch"></i>2.4版本功能详细说明
+        </div>
+        <div class="section-content">
+            <div class="feature-card">
+                <div class="feature-title">
+                    <i class="fas fa-filter"></i>定校推荐逻辑优化
+                </div>
+                <div class="feature-description">
+                    优化现有推荐逻辑，根据额外录取要求判断用户能否申请特定专业。
+                </div>
+                <ul class="feature-points">
+                    <li>若用户未通过专业本身（外层）的录取要求，但通过了额外录取要求</li>
+                    <li>且要求中表明了适用的学制和小方向，推荐后需标明可申请的学制和小方向</li>
+                    <li>学制推送到字段展示，小方向作为后缀放在专业中文名后，如：软件工程(AI方向)/Software Engineering</li>
+                    <li>若为空，则取专业上的学制，小方向不展示</li>
+                </ul>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-title">
+                    <i class="fas fa-sync-alt"></i>重新推荐功能
+                </div>
+                <div class="feature-description">
+                    增加重新推荐功能，允许用户刷新当前方案列表，获取新的推荐方案。
+                </div>
+                <ul class="feature-points">
+                    <li>按原型调整页面布局，增加重新推荐按钮</li>
+                    <li>用户点击重新推荐按钮后，触发AI重新推荐</li>
+                    <li>推荐完成后刷新当前方案列表，锁定方案不被刷新</li>
+                    <li>锁定方案不占推出方案数量</li>
+                    <li>刷新方案时，面板显示灰色蒙版，并展示加载中动画</li>
+                    <li>增加相关埋点以记录用户交互</li>
+                </ul>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-title">
+                    <i class="fas fa-lock"></i>方案锁定/解锁功能
+                </div>
+                <div class="feature-description">
+                    允许用户锁定喜欢的方案，防止在重新推荐时被刷新。
+                </div>
+                <ul class="feature-points">
+                    <li>用户可点击按钮锁定方案</li>
+                    <li>被锁定的方案不再被重新推荐功能刷新</li>
+                    <li>点击锁定后，按钮变成已锁定的图标</li>
+                    <li>该规则同样适用于提人触发的重新推荐</li>
+                    <li>锁定功能仅限制方案不被AI刷新，不影响人工修改</li>
+                    <li>刷新方案时占一个位，例如：共4个AI方案，其中3个被锁定，则重新推荐后出现7个方案</li>
+                </ul>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-title">
+                    <i class="fas fa-expand-alt"></i>方案详情收起、展开
+                </div>
+                <div class="feature-description">
+                    优化方案详情的展示方式，支持收起和展开操作。
+                </div>
+                <ul class="feature-points">
+                    <li>点击展开/收起按钮可切换方案详情的显示状态</li>
+                    <li>默认状态下只显示基本信息（专业名称、学制、学费）</li>
+                    <li>展开后显示完整信息（包括校区、开课日期、院系、专业链接、申请建议、申请费用等）</li>
+                    <li>展开/收起状态有明显的视觉反馈，按钮图标会相应变化</li>
+                </ul>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-title">
+                    <i class="fas fa-palette"></i>UI样式优化
+                </div>
+                <div class="feature-description">
+                    按照UI设计稿优化页面样式，提升用户体验。
+                </div>
+                <ul class="feature-points">
+                    <li>补充信息突出展示，更名为"申请建议"，强调展示</li>
+                    <li>优化国家分组样式，增加国旗图标和折叠功能</li>
+                    <li>优化学校卡片样式，增加序号、标签和操作按钮</li>
+                    <li>优化表单字段样式，重要信息（如学费、开学时间）使用不同颜色强调</li>
+                    <li>字段内容为空时隐藏该字段，不做展示</li>
+                    <li>增加响应式设计，适配移动端和PC端</li>
+                </ul>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-title">
+                    <i class="fas fa-download"></i>下载模板优化
+                </div>
+                <div class="feature-description">
+                    优化方案下载和预览功能，提升用户体验。
+                </div>
+                <ul class="feature-points">
+                    <li>按UI调整样式，补充信息突出展示</li>
+                    <li>字段内容为空时隐藏该字段，不做展示</li>
+                    <li>预览优化，使用iframe页面形式展示内容，先不生成PDF</li>
+                    <li>点击下载后再生成PDF，提升预览速度</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="section-title">
+            <i class="fas fa-calendar-alt"></i>版本规划
+        </div>
+        <div class="section-content">
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">2.4版本<span class="version-tag">当前版本</span></div>
+                        <div class="timeline-description">
+                            <p>重点实现定校推荐逻辑优化、方案锁定功能、重新推荐功能、UI样式优化等核心功能。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">2.5版本<span class="version-tag">规划中</span></div>
+                        <div class="timeline-description">
+                            <p>计划实现排序方式增加、ALevel分数表单优化、ALevel分数匹配逻辑、B端代理申请偏好、方案筛选-支持按专业/院校关键词搜索、申请热度与通过率展示、方案评价功能等功能。方案评价功能将支持用户对推荐方案进行评分和评价，帮助系统持续优化推荐算法。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">2.6版本<span class="version-tag">规划中</span></div>
+                        <div class="timeline-description">
+                            <p>计划实现移动端交互优化，支持刷新与锁定、同步定校、推荐逻辑优化，填完定校信息补充一次AI推荐定校、提人工后信息更新等功能。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section-title">
+            <i class="fas fa-laptop-code"></i>原型参考
+        </div>
+        <div class="section-content">
+            <div class="notice">
+                <i class="fas fa-info-circle"></i>
+                <div>
+                    以下是当前实现的原型参考，开发时请以此为基础进行功能实现。
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-title">
+                    <i class="fas fa-list-ul"></i>主要交互元素
+                </div>
+                <ul class="feature-points">
+                    <li><strong>国家分组</strong>：按国家对学校方案进行分组，支持展开/收起</li>
+                    <li><strong>学校卡片</strong>：展示学校和专业信息，支持展开/收起详情</li>
+                    <li><strong>方案锁定</strong>：锁定按钮，防止方案被刷新</li>
+                    <li><strong>方案同步</strong>：同步方案至申请院校</li>
+                    <li><strong>更多功能</strong>：包括复制方案信息、查看材料清单、删除当前方案等</li>
+                    <li><strong>重新推荐</strong>：触发AI重新推荐功能</li>
+                </ul>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-title">
+                    <i class="fas fa-edit"></i>编辑功能
+                </div>
+                <ul class="feature-points">
+                    <li>所有字段支持编辑功能，点击编辑图标进入编辑状态</li>
+                    <li>编辑状态下字段底部有蓝色边框提示</li>
+                    <li>编辑完成后点击确认图标保存修改</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
