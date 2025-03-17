@@ -322,6 +322,90 @@
                 font-size: 16px;
             }
         }
+        
+        /* 添加展开按钮样式 */
+        .expand-button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .expand-button {
+            background-color: #f5f7fa;
+            border: 1px solid #e8e8e8;
+            border-radius: 20px;
+            padding: 8px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .expand-button:hover {
+            background-color: #e6f7ff;
+            border-color: #91d5ff;
+            box-shadow: 0 4px 12px rgba(24, 144, 255, 0.1);
+        }
+        
+        .expand-button .expand-text {
+            margin-right: 8px;
+            font-size: 14px;
+            color: #595959;
+        }
+        
+        .expand-button i {
+            color: #1890ff;
+            transition: transform 0.3s ease;
+        }
+        
+        .expand-button.expanded i {
+            transform: rotate(180deg);
+        }
+        
+        /* 隐藏额外的需求行 */
+        .requirement-table tr.hidden-row {
+            display: none;
+        }
+        
+        /* 展开时的动画 */
+        .requirement-table tr.show-row {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 16px;
+                margin: 10px;
+                border-radius: 8px;
+            }
+            
+            .requirement-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .header {
+                padding: 12px 16px;
+            }
+            
+            .header-title {
+                font-size: 16px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -476,6 +560,17 @@
                     </tr>
                     <tr>
                         <td>11</td>
+                        <td>定校排序逻辑调整</td>
+                        <td>专业分类相关度</td>
+                        <td>专业与专业分类存在相关度的概念，推荐时排序需要考虑相关的程度，相关度高的优先推荐</td>
+                        <td>
+                            <div class="tag tag-version">2.5版本</div>
+                            <div class="tag tag-platform">B/C</div>
+                            <div class="tag tag-page">推荐逻辑</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
                         <td>ALevel分数表单优化</td>
                         <td>完善表单功能</td>
                         <td></td>
@@ -486,7 +581,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>12</td>
+                        <td>13</td>
                         <td>ALevel分数匹配逻辑</td>
                         <td>优化匹配算法</td>
                         <td></td>
@@ -497,7 +592,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>13</td>
+                        <td>14</td>
                         <td>B端代理申请偏好</td>
                         <td>提升代理体验</td>
                         <td></td>
@@ -508,7 +603,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>14</td>
+                        <td>15</td>
                         <td>方案筛选-支持按专业/院校关键词搜索</td>
                         <td>增强搜索能力</td>
                         <td></td>
@@ -519,7 +614,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>15</td>
+                        <td>16</td>
                         <td>申请热度、申请通过率展示</td>
                         <td>提供参考数据</td>
                         <td></td>
@@ -530,7 +625,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>16</td>
+                        <td>17</td>
                         <td>方案评价功能</td>
                         <td>收集用户反馈</td>
                         <td>支持用户对推荐方案进行评分和评价，帮助系统优化推荐算法</td>
@@ -541,7 +636,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>17</td>
+                        <td>18</td>
                         <td>移动端交互优化，支持刷新与锁定、同步定校</td>
                         <td>移动端体验提升</td>
                         <td></td>
@@ -552,7 +647,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>18</td>
+                        <td>19</td>
                         <td>推荐逻辑优化，填完定校信息，补充一次AI推荐定校</td>
                         <td>智能推荐增强</td>
                         <td></td>
@@ -563,7 +658,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>19</td>
+                        <td>20</td>
                         <td>提人工后信息更新，后台同步信息，但方案不更新</td>
                         <td>人工协作优化</td>
                         <td></td>
@@ -576,11 +671,12 @@
                 </tbody>
             </table>
             
-            <div class="notice">
-                <i class="fas fa-lightbulb"></i>
-                <div>
-                    以上为2.4版本的主要需求清单，后续版本(2.5、2.6)的需求将在相应版本开发前详细规划。
-                </div>
+            <!-- 添加展开/收起按钮 -->
+            <div class="expand-button-container">
+                <button id="expandListBtn" class="expand-button">
+                    <span class="expand-text">查看更多需求</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
             </div>
         </div>
         
@@ -776,4 +872,47 @@
         </div>
     </div>
 </body>
+</html>
+</div>
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 获取需求表格和展开按钮
+        const requirementTable = document.querySelector('.requirement-table');
+        const expandButton = document.getElementById('expandListBtn');
+        const expandText = expandButton.querySelector('.expand-text');
+        
+        // 获取所有行
+        const rows = requirementTable.querySelectorAll('tbody tr');
+        
+        // 初始化：隐藏第10行之后的所有行
+        for (let i = 10; i < rows.length; i++) {
+            rows[i].classList.add('hidden-row');
+        }
+        
+        // 展开/收起按钮点击事件
+        expandButton.addEventListener('click', function() {
+            const isExpanded = expandButton.classList.toggle('expanded');
+            
+            if (isExpanded) {
+                // 展开所有行
+                for (let i = 10; i < rows.length; i++) {
+                    rows[i].classList.remove('hidden-row');
+                    rows[i].classList.add('show-row');
+                }
+                expandText.textContent = '收起需求列表';
+            } else {
+                // 收起额外行
+                for (let i = 10; i < rows.length; i++) {
+                    rows[i].classList.add('hidden-row');
+                    rows[i].classList.remove('show-row');
+                }
+                expandText.textContent = '查看更多需求';
+                
+                // 滚动到表格顶部
+                requirementTable.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+    });
+</script>
 </html>
