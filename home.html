@@ -354,26 +354,18 @@
         }
 
         .edit-icon {
-            color: #1890ff;
-            cursor: pointer;
-            font-size: 14px;
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: rgba(255, 255, 255, 0.8);
-            width: 24px;
-            height: 24px;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
+            display: none; /* 隐藏编辑按钮 */
         }
-
-        .edit-icon:hover {
-            color: #40a9ff;
-            background-color: rgba(230, 247, 255, 0.9);
+        
+        /* 优化表单输入区域的悬停效果 */
+        .form-input {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:hover {
+            background-color: rgba(24, 144, 255, 0.05);
+            border-radius: 4px;
         }
         
         .action-icon {
@@ -451,6 +443,16 @@
         }
         
         .input-text.editable, .input-textarea.editable {
+            border-bottom: 1px solid #1890ff;
+            background-color: rgba(24, 144, 255, 0.05);
+            padding: 8px 10px;
+            border-radius: 4px;
+            cursor: text;
+            box-shadow: 0 1px 4px rgba(24, 144, 255, 0.1);
+        }
+        
+        /* 添加输入框悬停效果 */
+        .form-input:hover .input-text, .form-input:hover .input-textarea {
             border-bottom: 1px solid #1890ff;
             background-color: rgba(24, 144, 255, 0.05);
             padding: 8px 10px;
@@ -608,24 +610,7 @@
         }
         
         .country-toggle-btn {
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: rgba(255, 255, 255, 0.7);
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            color: #595959;
-            border: 1px solid #e8e8e8;
-        }
-        
-        .country-toggle-btn:hover {
-            background-color: #fff;
-            color: #1890ff;
-            transform: scale(1.05);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: none; /* 隐藏国家栏展开/收起按钮 */
         }
         
         .country-toggle-btn i {
@@ -715,19 +700,78 @@
             color: #262626;
         }
         
+        /* 院校LOGO和QS排名样式 */
+        .school-logo-container {
+            position: relative;
+            margin-right: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .school-logo {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #fff;
+            border: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .school-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .school-rank {
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #1890ff;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 1px 4px;
+            border-radius: 8px;
+            box-shadow: 0 1px 2px rgba(24, 144, 255, 0.2);
+            white-space: nowrap;
+        }
+        
+        /* 推荐标签样式 */
+        .school-recommend-tag {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 8px;
+            background-color: #91d5ff;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(24, 144, 255, 0.2);
+        }
+        
         .school-number {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 26px;
-            height: 26px;
-            background-color: #1890ff;
-            color: white;
+            width: 22px;
+            height: 22px;
+            background-color: #e6f7ff;
+            color: #1890ff;
             border-radius: 50%;
             margin-right: 12px;
-            font-size: 13px;
-            font-weight: 600;
-            box-shadow: 0 2px 4px rgba(24, 144, 255, 0.2);
+            font-size: 12px;
+            font-weight: 500;
+            border: 1px solid #91d5ff;
         }
         
         .school-tag {
@@ -1130,8 +1174,15 @@
                         <div class="school-header">
                             <div class="school-name">
                                 <div class="school-number">1</div>
+                                <div class="school-logo-container">
+                                    <div class="school-logo">
+                                        <img src="https://bkimg.cdn.bcebos.com/pic/b999a9014c086e061d95687ea6516cf40ad162d95df6?x-bce-process=image/format,f_auto/quality,Q_70/resize,m_lfit,limit_1,w_536" alt="奥克兰大学" />
+                                    </div>
+                                    <div class="school-rank">QS 85</div>
+                                </div>
                                 奥克兰大学/University of Auckland
                                 <div class="school-tag">冲刺</div>
+                                <div class="school-recommend-tag">荐</div>
                             </div>
                             <div class="school-actions">
                                 <div class="action-icon sync-btn" title="同步方案">
@@ -1232,10 +1283,16 @@
                     <div class="school-item">
                     <div class="school-header">
                         <div class="school-name">
-                            <div class="school-number">2</div>
-                            惠灵顿维多利亚大学/Victoria University of Wellington
-                            <div class="school-tag">冲刺</div>
-                        </div>
+                                <div class="school-number">2</div>
+                                <div class="school-logo-container">
+                                    <div class="school-logo">
+                                        <img src="https://bkimg.cdn.bcebos.com/pic/09fa513d269759ee3d6df4d2cbad54166d224f4a7129?x-bce-process=image/format,f_auto/quality,Q_70/resize,m_lfit,limit_1,w_536" alt="惠灵顿维多利亚大学" />
+                                    </div>
+                                    <div class="school-rank">QS 236</div>
+                                </div>
+                                惠灵顿维多利亚大学/Victoria University of Wellington
+                                <div class="school-tag">冲刺</div>
+                            </div>
                         <div class="school-actions">
                             <div class="action-icon sync-btn" title="同步方案">
                                 <i class="fas fa-sync-alt"></i>
@@ -1334,8 +1391,15 @@
                     <div class="school-header">
                         <div class="school-name">
                             <div class="school-number">3</div>
+                            <div class="school-logo-container">
+                                <div class="school-logo">
+                                    <img src="https://bkimg.cdn.bcebos.com/pic/09fa513d269759ee3d6df4d2cbad54166d224f4a7129?x-bce-process=image/format,f_auto/quality,Q_70/resize,m_lfit,limit_1,w_536" alt="坎特伯雷大学" />
+                                </div>
+                                <div class="school-rank">QS 284</div>
+                            </div>
                             坎特伯雷大学/University of Canterbury
                             <div class="school-tag">冲刺</div>
+                            <div class="school-recommend-tag">荐</div>
                         </div>
                         <div class="school-actions">
                             <div class="action-icon sync-btn" title="同步方案">
@@ -1435,6 +1499,12 @@
                     <div class="school-header">
                         <div class="school-name">
                             <div class="school-number">4</div>
+                            <div class="school-logo-container">
+                                <div class="school-logo">
+                                    <img src="https://bkimg.cdn.bcebos.com/pic/18d8bc3eb13533fa828b40a8189fea1f4134960aedaa?x-bce-process=image/format,f_auto/watermark,image_d2F0ZXIvYmFpa2UyNzI,g_7,xp_5,yp_5,P_20/resize,m_lfit,limit_1,h_1080" alt="新西兰奥克兰理工大学" />
+                                </div>
+                                <div class="school-rank">QS 437</div>
+                            </div>
                             新西兰奥克兰理工大学/Auckland University of Technology
                             <div class="school-tag">冲刺</div>
                         </div>
@@ -1550,6 +1620,12 @@
                         <div class="school-header">
                             <div class="school-name">
                                 <div class="school-number">5</div>
+                                <div class="school-logo-container">
+                                    <div class="school-logo">
+                                        <img src="https://bkimg.cdn.bcebos.com/pic/29381f30e924b899a9018590544a0a950a7b0208584c?x-bce-process=image/format,f_auto/quality,Q_70/resize,m_lfit,limit_1,w_536" alt="剑桥大学" />
+                                    </div>
+                                    <div class="school-rank">QS 2</div>
+                                </div>
                                 剑桥大学/University of Cambridge
                                 <div class="school-tag">冲刺</div>
                             </div>
@@ -1652,6 +1728,12 @@
                         <div class="school-header">
                             <div class="school-name">
                                 <div class="school-number">6</div>
+                                <div class="school-logo-container">
+                                    <div class="school-logo">
+                                        <img src="https://bkimg.cdn.bcebos.com/pic/f3d3572c11dfa9ec8a13d7fc3e82e003918fa1ec6b87?x-bce-process=image/format,f_auto/quality,Q_70/resize,m_lfit,limit_1,w_536" alt="牛津大学" />
+                                    </div>
+                                    <div class="school-rank">QS 1</div>
+                                </div>
                                 牛津大学/University of Oxford
                                 <div class="school-tag">冲刺</div>
                             </div>
@@ -1754,6 +1836,12 @@
                         <div class="school-header">
                             <div class="school-name">
                                 <div class="school-number">7</div>
+                                <div class="school-logo-container">
+                                    <div class="school-logo">
+                                        <img src="https://bkimg.cdn.bcebos.com/pic/2e2eb9389b504fc2b2978a74eadde71191ef6df2?x-bce-process=image/format,f_auto/quality,Q_70/resize,m_lfit,limit_1,w_536" alt="帝国理工学院" />
+                                    </div>
+                                    <div class="school-rank">QS 6</div>
+                                </div>
                                 帝国理工学院/Imperial College London
                                 <div class="school-tag">冲刺</div>
                             </div>
@@ -1986,47 +2074,34 @@
                 }, 2000);
             }
             
-            // 国家栏展开/收起功能
+            // 国家栏始终保持展开状态，不再提供展开/收起功能
             const countryToggleBtns = document.querySelectorAll('.country-toggle-btn');
             countryToggleBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const countryHeader = this.closest('.country-header');
-                    const countryContent = countryHeader.nextElementSibling;
-                    const allSchoolItems = [];
-                    
-                    // 获取该国家下所有学校卡片
-                    let nextElement = countryHeader.nextElementSibling;
-                    while (nextElement && !nextElement.classList.contains('country-header')) {
-                        if (nextElement.classList.contains('school-item')) {
-                            allSchoolItems.push(nextElement);
-                        }
-                        nextElement = nextElement.nextElementSibling;
+                // 隐藏展开/收起按钮
+                btn.style.display = 'none';
+            });
+            
+            // 初始化国家内容包装器，确保所有国家内容始终展开
+            document.querySelectorAll('.country-header').forEach(header => {
+                const allSchoolItems = [];
+                let nextElement = header.nextElementSibling;
+                
+                while (nextElement && !nextElement.classList.contains('country-header')) {
+                    if (nextElement.classList.contains('school-item')) {
+                        allSchoolItems.push(nextElement);
                     }
+                    nextElement = nextElement.nextElementSibling;
+                }
+                
+                if (allSchoolItems.length > 0) {
+                    const contentWrapper = document.createElement('div');
+                    contentWrapper.className = 'country-content';
+                    header.after(contentWrapper);
                     
-                    // 创建一个包裹所有学校卡片的容器，如果不存在
-                    let contentWrapper = countryHeader.nextElementSibling;
-                    if (!contentWrapper || !contentWrapper.classList.contains('country-content')) {
-                        contentWrapper = document.createElement('div');
-                        contentWrapper.className = 'country-content';
-                        countryHeader.after(contentWrapper);
-                        
-                        // 将所有学校卡片移动到容器中
-                        allSchoolItems.forEach(item => {
-                            contentWrapper.appendChild(item);
-                        });
-                    }
-                    
-                    // 切换展开/收起状态
-                    contentWrapper.classList.toggle('collapsed');
-                    
-                    // 更改图标方向
-                    const icon = this.querySelector('i');
-                    if (contentWrapper.classList.contains('collapsed')) {
-                        icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
-                    } else {
-                        icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
-                    }
-                });
+                    allSchoolItems.forEach(item => {
+                        contentWrapper.appendChild(item);
+                    });
+                }
             });
             
             // 初始化国家内容包装器
@@ -2052,23 +2127,30 @@
                 }
             });
             
-            // 编辑按钮功能
+            // 移除编辑按钮，改为悬停触发编辑功能
             const editIcons = document.querySelectorAll('.edit-icon');
             editIcons.forEach(icon => {
-                icon.addEventListener('click', function() {
-                    const input = this.closest('.form-input').querySelector('.input-text, .input-textarea');
-                    const isEditable = input.classList.toggle('editable');
-                    input.readOnly = !isEditable;
+                // 隐藏所有编辑按钮
+                icon.style.display = 'none';
+            });
+            
+            // 为所有输入字段添加悬停编辑功能
+            const inputFields = document.querySelectorAll('.form-input');
+            inputFields.forEach(field => {
+                const input = field.querySelector('.input-text, .input-textarea');
+                if (input) {
+                    // 鼠标进入时激活编辑状态
+                    field.addEventListener('mouseenter', function() {
+                        input.classList.add('editable');
+                        input.readOnly = false;
+                    });
                     
-                    // 切换图标
-                    if (isEditable) {
-                        this.classList.remove('fa-edit');
-                        this.classList.add('fa-check');
-                    } else {
-                        this.classList.remove('fa-check');
-                        this.classList.add('fa-edit');
-                    }
-                });
+                    // 鼠标离开时取消编辑状态
+                    field.addEventListener('mouseleave', function() {
+                        input.classList.remove('editable');
+                        input.readOnly = true;
+                    });
+                }
             });
         });
     </script>
