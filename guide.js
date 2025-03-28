@@ -159,28 +159,18 @@ function startGuide() {
     intro.setOptions({
         steps: [
             {
-                element: document.querySelector('.action-icon.sync-btn'),
-                intro: '点击此按钮可将当前方案同步至我的面板，同步后按钮将变为灰色。',
-                position: 'left'
-            },
-            {
-                element: document.querySelector('.action-icon.lock-btn'),
-                intro: '点击此按钮可锁定当前方案，锁定后的方案在重新推荐时不会被刷新。再次点击可解除锁定。',
-                position: 'left'
-            },
-            {
-                element: document.querySelector('.action-btn:has(i.fa-sync)'),
-                intro: '点击此按钮可触发AI重新推荐方案，获取更多符合您需求的留学方案。',
+                element: document.querySelector('.school-actions'),
+                intro: '<div style="text-align:left;line-height:1.6">方案功能区：<br><br>1. <b>同步到定校</b>：将方案一键同步至确认定校<br>2. <b>方案锁定</b>：重新推荐方案时，锁定的方案将不再刷新<br>3. <b>更多</b>：复制方案、查看申请材料、删除方案<br>4. <b>展开/收起</b>：点击可展开或收起方案卡片</div>',
                 position: 'bottom'
             },
             {
-                element: document.querySelector('.action-icon.toggle-btn'),
-                intro: '点击此按钮可展开或收起方案详细信息，方便您查看完整的专业信息。',
-                position: 'left'
+                element: document.querySelector('.action-btn:has(i.fa-sync)'),
+                intro: '点此按钮更改您的需求信息，即可触发AI重新推荐方案，获取更多符合您需求的留学方案。',
+                position: 'bottom'
             },
             {
-                element: document.querySelector('.edit-icon'),
-                intro: '点击此按钮可编辑当前字段信息，修改后点击确认即可保存。',
+                element: document.querySelector('.form-input'),
+                intro: '点击字段，即可对字段内容进行编辑；',
                 position: 'left'
             }
         ],

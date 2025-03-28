@@ -496,7 +496,7 @@
                         <td>5</td>
                         <td>下载模板优化</td>
                         <td>提升用户体验</td>
-                        <td>按UI调整样式，补充信息突出展示，字段内容为空则隐藏字段，预览优化，使用iframe页面形式展示内容</td>
+                        <td>1. 按UI调整样式，补充信息突出展示，字段内容为空则隐藏字段；2. 预览优化，预览时使用页面展示（不先生成pdf），下载时调用页面打印功能直接打印成pdf</td>
                         <td>
                             <div class="tag tag-version">2.4版本</div>
                             <div class="tag tag-platform">B 移动/PC</div>
@@ -505,13 +505,13 @@
                     </tr>
                     <tr>
                         <td>6</td>
-                        <td>补充说明数据维护</td>
-                        <td>数据完整性</td>
-                        <td>库中大量专业缺少该字段，批量补充，数据导入功能增加字段</td>
+                        <td>功能优化 - 提交平台优化</td>
+                        <td>提升用户体验</td>
+                        <td>用户填写了其他要求，之后又提交人工，并填写了提人工的反馈：1. 管理后台：收到的反馈信息改为两者的拼接，通过分号分隔（其他要求 ； 提交人工反馈）2. 开放平台：其他要求赋值为两者的拼接，通过分号分隔（其他要求 ； 提交人工反馈）</td>
                         <td>
                             <div class="tag tag-version">2.4版本</div>
-                            <div class="tag tag-platform">小希后台</div>
-                            <div class="tag tag-page">院校库</div>
+                            <div class="tag tag-platform">管理后台/C/B端</div>
+                            <div class="tag tag-page">方案制作页</div>
                         </td>
                     </tr>
                     <tr>
@@ -540,7 +540,7 @@
                         <td>9</td>
                         <td>操作引导功能</td>
                         <td>提升用户体验</td>
-                        <td>为新增功能添加操作引导提示，包括方案同步、方案锁定、重新推荐方案、方案卡片展开收起、方案编辑按钮等功能的使用说明</td>
+                        <td>为新增功能添加操作引导提示，包括方案同步、方案锁定、重新推荐方案、方案卡片展开收起、方案编辑按钮等功能的使用说明，详见UI设计稿；自上线后起，用户初次进入页面触发引导，后续进入不再触发，用户点击引导按钮可再次触发</td>
                         <td>
                             <div class="tag tag-version">2.4版本</div>
                             <div class="tag tag-platform">B PC端</div>
@@ -549,17 +549,26 @@
                     </tr>
                     <tr>
                         <td>10</td>
+                        <td>功能优化 - 学术要求的显示</td>
+                        <td>提升用户体验</td>
+                        <td>1. 方案制作页，AI方案推荐时，专业有学术要求，则直接显示在专业的补充信息中；2. 方案任务台，人工推方案时，专业有学术要求，需点击完善方案才显示出来，需要优化，直接显示出来；</td>
+                        <td>
+                            <div class="tag tag-version">2.4版本</div>
+                            <div class="tag tag-platform">管理后台/C/B端</div>
+                            <div class="tag tag-page">方案制作页</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
                         <td>排序方式增加</td>
                         <td>增强筛选能力</td>
                         <td>增加qs排名、学费、学制的判断条件或排序</td>
                         <td>
                             <div class="tag tag-version">2.5版本</div>
-                            <div class="tag tag-platform"></div>
-                            <div class="tag tag-page"></div>
                         </td>
                     </tr>
                     <tr>
-                        <td>11</td>
+                        <td>13</td>
                         <td>定校排序逻辑调整</td>
                         <td>专业分类相关度</td>
                         <td>专业与专业分类存在相关度的概念，推荐时排序需要考虑相关的程度，相关度高的优先推荐</td>
@@ -570,62 +579,52 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>12</td>
+                        <td>14</td>
                         <td>ALevel分数表单优化</td>
                         <td>完善表单功能</td>
                         <td></td>
                         <td>
                             <div class="tag tag-version">2.5版本</div>
-                            <div class="tag tag-platform"></div>
-                            <div class="tag tag-page"></div>
                         </td>
                     </tr>
                     <tr>
-                        <td>13</td>
+                        <td>15</td>
                         <td>ALevel分数匹配逻辑</td>
                         <td>优化匹配算法</td>
                         <td></td>
                         <td>
                             <div class="tag tag-version">2.5版本</div>
-                            <div class="tag tag-platform"></div>
-                            <div class="tag tag-page"></div>
                         </td>
                     </tr>
                     <tr>
-                        <td>14</td>
+                        <td>16</td>
                         <td>B端代理申请偏好</td>
                         <td>提升代理体验</td>
                         <td></td>
                         <td>
                             <div class="tag tag-version">2.5版本</div>
-                            <div class="tag tag-platform"></div>
-                            <div class="tag tag-page"></div>
                         </td>
                     </tr>
                     <tr>
-                        <td>15</td>
+                        <td>17</td>
                         <td>方案筛选-支持按专业/院校关键词搜索</td>
                         <td>增强搜索能力</td>
                         <td></td>
                         <td>
                             <div class="tag tag-version">2.5版本</div>
-                            <div class="tag tag-platform"></div>
-                            <div class="tag tag-page"></div>
                         </td>
                     </tr>
                     <tr>
-                        <td>16</td>
+                        <td>17</td>
                         <td>申请热度、申请通过率展示</td>
                         <td>提供参考数据</td>
                         <td></td>
                         <td>
                             <div class="tag tag-version">2.5版本</div>
-                            <div class="tag tag-platform"></div>
-                            <div class="tag tag-page"></div>
                         </td>
                     </tr>
                     <tr>
-                        <td>17</td>
+                        <td>18</td>
                         <td>方案评价功能</td>
                         <td>收集用户反馈</td>
                         <td>支持用户对推荐方案进行评分和评价，帮助系统优化推荐算法</td>
@@ -636,41 +635,34 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>18</td>
+                        <td>19</td>
                         <td>移动端交互优化，支持刷新与锁定、同步定校</td>
                         <td>移动端体验提升</td>
                         <td></td>
                         <td>
                             <div class="tag tag-version">2.6版本</div>
-                            <div class="tag tag-platform"></div>
-                            <div class="tag tag-page"></div>
                         </td>
                     </tr>
                     <tr>
-                        <td>19</td>
+                        <td>20</td>
                         <td>推荐逻辑优化，填完定校信息，补充一次AI推荐定校</td>
                         <td>智能推荐增强</td>
                         <td></td>
                         <td>
                             <div class="tag tag-version">2.6版本</div>
-                            <div class="tag tag-platform"></div>
-                            <div class="tag tag-page"></div>
                         </td>
                     </tr>
                     <tr>
-                        <td>20</td>
+                        <td>21</td>
                         <td>提人工后信息更新，后台同步信息，但方案不更新</td>
                         <td>人工协作优化</td>
                         <td></td>
                         <td>
                             <div class="tag tag-version">2.6版本</div>
-                            <div class="tag tag-platform"></div>
-                            <div class="tag tag-page"></div>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            
             <!-- 添加展开/收起按钮 -->
             <div class="expand-button-container">
                 <button id="expandListBtn" class="expand-button">
